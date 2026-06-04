@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Next Door Homeless — Impact You Can See Out Your Window</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bitter:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── MATERIAL FLAT PALETTE ───────────────────────────────────────────────
+       Primary     #00BB77  brand green
+       On-Primary  #FFFFFF
+       Forest      #005C3A  dark tonal
+       Surface     #FAFAFA  near-white
+       Surface-2   #F2F2F2  tonal grey
+       On-Surface  #1A1A1A
+       Amber       #F5A623  accent warm
+       Rose        #E8B4B8  accent soft
+       Stroke      #E0E0E0  dividers
+    ─────────────────────────────────────────────────────────────────────────── */
+    :root {
+      --green:      #00BB77;
+      --forest:     #005C3A;
+      --on-green:   #FFFFFF;
+      --surface:    #FAFAFA;
+      --surface-2:  #F0F0F0;
+      --surface-inv:#1A1A1A;
+      --amber:      #F5A623;
+      --rose:       #E8B4B8;
+      --stroke:     #E0E0E0;
+      --ink:        #1A1A1A;
+      --ink-2:      #555555;
+      --ink-3:      #888888;
+      --white:      #FFFFFF;
+
+      --font-ui:   'Plus Jakarta Sans', sans-serif;
+      --font-head: 'Bitter', Georgia, serif;
+
+      --r:    4px;
+      --r-md: 8px;
+      --r-lg: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-ui);
+      background: var(--surface);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── TYPOGRAPHY ─────────────────────────────────────────────────────────── */
+    h1, h2, h3 { font-family: var(--font-head); line-height: 1.12; }
+    h4, h5, h6, label, button, .label-text { font-family: var(--font-ui); }
+    p { line-height: 1.72; font-weight: 400; color: var(--ink-2); }
+    a { text-decoration: none; }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px;
+      background: var(--white);
+      border-bottom: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--ink);
+    }
+
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .nav-logo-text span { color: var(--green); display: block; }
+
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 600; color: var(--ink-2);
+      padding: 6px 14px;
+      border-radius: var(--r);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover { background: var(--surface-2); color: var(--ink); }
+
+    .nav-cta {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      font-weight: 700 !important;
+      padding: 8px 20px !important;
+      border-radius: var(--r) !important;
+      transition: background 0.15s !important;
+    }
+
+    .nav-cta:hover { background: var(--forest) !important; }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none; position: absolute; top: 64px; left: 0; right: 0;
+        background: var(--white); border-bottom: 2px solid var(--green);
+        flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 4px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
+    section { padding: 80px 24px; }
+    .wrap { max-width: 1096px; margin: 0 auto; }
+    .wrap-sm { max-width: 720px; margin: 0 auto; }
+
+    /* ── BUTTONS ─────────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-ui); font-weight: 700; font-size: 0.88rem;
+      padding: 12px 24px;
+      border: none; cursor: pointer;
+      border-radius: var(--r);
+      position: relative; overflow: hidden;
+      transition: background 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0); transition: background 0.15s;
+    }
+    .btn:hover::after { background: rgba(0,0,0,0.08); }
+
+    .btn-filled { background: var(--green); color: var(--white); }
+    .btn-filled-dark { background: var(--surface-inv); color: var(--white); }
+    .btn-outline { background: transparent; color: var(--ink); border: 2px solid var(--stroke); }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+    .btn-amber { background: var(--amber); color: var(--ink); }
+    .btn-ghost { background: rgba(255,255,255,0.12); color: var(--white); border: 1.5px solid rgba(255,255,255,0.2); }
+    .btn-ghost:hover::after { background: rgba(255,255,255,0.08); }
+
+    /* ── HERO ─────────────────────────────────────────────────────────────────── */
+    #home {
+      padding: 0; min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr;
+      background: var(--white);
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1096px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 120px 24px 80px;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-left { }
+
+    .hero-flag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface-2);
+      padding: 6px 12px;
+      margin-bottom: 24px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    .hero-flag-dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    h1.hero-title {
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      color: var(--ink);
+      margin-bottom: 20px;
+      font-weight: 900;
+    }
+
+    h1.hero-title .accent { color: var(--green); }
+
+    .hero-body {
+      font-size: 1.05rem; color: var(--ink-2);
+      margin-bottom: 32px; max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+
+    .hero-metrics {
+      display: flex; gap: 0;
+      border-top: 2px solid var(--stroke);
+      padding-top: 32px;
+    }
+
+    .metric {
+      flex: 1;
+      padding-right: 24px;
+      border-right: 2px solid var(--stroke);
+      margin-right: 24px;
+    }
+
+    .metric:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+
+    .metric-val {
+      font-family: var(--font-head);
+      font-size: 2rem; font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--ink-3); margin-top: 4px; line-height: 1.4;
+    }
+
+    /* hero right: stacked material cards */
+    .hero-right { display: flex; flex-direction: column; gap: 12px; }
+
+    .hero-card {
+      background: var(--surface-2);
+      padding: 24px;
+      border-left: 4px solid var(--green);
+    }
+
+    .hero-card.accent-amber { border-left-color: var(--amber); }
+    .hero-card.accent-dark { background: var(--surface-inv); border-left-color: var(--green); }
+
+    .hero-card-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 6px;
+    }
+
+    .hero-card.accent-dark .hero-card-label { color: var(--green); }
+
+    .hero-card h3 {
+      font-family: var(--font-head); font-size: 1.15rem;
+      color: var(--ink); margin-bottom: 6px;
+    }
+
+    .hero-card.accent-dark h3 { color: var(--white); }
+
+    .hero-card p { font-size: 0.85rem; color: var(--ink-2); line-height: 1.6; }
+    .hero-card.accent-dark p { color: rgba(255,255,255,0.55); }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--white); border: 1.5px solid var(--stroke);
+      padding: 4px 10px;
+      font-size: 0.75rem; font-weight: 600; color: var(--ink-2);
+      margin-top: 10px; margin-right: 6px;
+    }
+
+    .chip-dot { width: 6px; height: 6px; background: var(--green); flex-shrink: 0; }
+
+    @media (max-width: 880px) {
+      .hero-layout { grid-template-columns: 1fr; gap: 40px; padding-top: 100px; }
+      .hero-right { display: none; }
+    }
+
+    /* ── MISSION ─────────────────────────────────────────────────────────────── */
+    #mission { background: var(--surface-inv); padding: 80px 24px; }
+
+    .mission-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+    }
+
+    .mission-left h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); margin-bottom: 20px;
+    }
+
+    .mission-left .eyebrow { color: #60D9A8; }
+    .mission-left p { color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+
+    .mission-pullquote {
+      border-left: 4px solid var(--green);
+      padding: 16px 20px;
+      background: rgba(0,187,119,0.08);
+      margin-top: 28px;
+    }
+
+    .mission-pullquote p {
+      font-family: var(--font-head);
+      font-size: 1.1rem; font-style: italic;
+      color: var(--white) !important;
+      line-height: 1.55;
+    }
+
+    .values-list { display: flex; flex-direction: column; gap: 2px; }
+
+    .value-row {
+      display: grid; grid-template-columns: 44px 1fr;
+      background: rgba(255,255,255,0.04);
+      border-left: 3px solid transparent;
+      padding: 16px 20px; gap: 16px; align-items: start;
+      transition: background 0.15s, border-color 0.15s;
+      cursor: default;
+    }
+
+    .value-row:hover { background: rgba(0,187,119,0.07); border-left-color: var(--green); }
+
+    .value-num {
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 900;
+      color: var(--green); line-height: 1;
+    }
+
+    .value-content h4 {
+      font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 4px;
+    }
+
+    .value-content p { font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.55; }
+
+    @media (max-width: 820px) {
+      .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── PROGRAMS ────────────────────────────────────────────────────────────── */
+    #programs { background: var(--white); }
+
+    .section-header { margin-bottom: 48px; }
+    .section-header h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 12px; }
+    .section-header p { max-width: 560px; }
+
+    .programs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+
+    .prog-card { background: var(--surface-2); display: flex; flex-direction: column; }
+
+    .prog-top {
+      padding: 32px 28px 28px;
+      position: relative; overflow: hidden;
+    }
+
+    .prog-top.water { background: var(--forest); }
+    .prog-top.knitwear { background: var(--surface-inv); }
+    .prog-top.future { background: var(--amber); }
+
+    .prog-season {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+
+    .prog-top.water .prog-season { color: rgba(255,255,255,0.5); }
+    .prog-top.knitwear .prog-season { color: rgba(255,255,255,0.4); }
+    .prog-top.future .prog-season { color: rgba(30,30,30,0.55); }
+
+    .prog-top h3 {
+      font-size: 1.8rem; color: var(--white); margin-bottom: 10px;
+    }
+
+    .prog-top.future h3 { color: var(--ink); }
+
+    .prog-top p { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .prog-top.future p { color: rgba(30,30,30,0.65); }
+
+    .prog-top-num {
+      position: absolute; right: 24px; bottom: 20px;
+      font-family: var(--font-head); font-size: 5rem; font-weight: 900;
+      opacity: 0.07; color: var(--white); line-height: 1; pointer-events: none;
+    }
+
+    .prog-top.future .prog-top-num { color: var(--ink); }
+
+    .prog-body { padding: 24px 28px; flex: 1; }
+
+    .phase-tag {
+      display: inline-block; padding: 3px 10px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+
+    .phase-now { background: var(--green); color: var(--white); }
+    .phase-future { background: var(--amber); color: var(--ink); }
+
+    .prog-items { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .prog-items li {
+      display: flex; gap: 10px;
+      font-size: 0.85rem; color: var(--ink-2); line-height: 1.55;
+    }
+
+    .prog-items li::before {
+      content: ''; display: block; width: 4px; height: 4px;
+      background: var(--green); flex-shrink: 0; margin-top: 8px;
+    }
+
+    @media (max-width: 820px) {
+      .programs-grid { grid-template-columns: 1fr; gap: 2px; }
+    }
+
+    /* ── IMPACT ──────────────────────────────────────────────────────────────── */
+    #impact { background: var(--surface-2); }
+
+    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+
+    .impact-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+    .stat-tile {
+      background: var(--white);
+      padding: 28px 24px;
+      border-top: 4px solid var(--stroke);
+      transition: border-color 0.2s;
+    }
+
+    .stat-tile:hover { border-top-color: var(--green); }
+
+    .stat-tile.featured {
+      grid-column: span 2;
+      background: var(--green);
+      border-top-color: var(--forest);
+    }
+
+    .stat-tile .num {
+      font-family: var(--font-head); font-size: 2.8rem; font-weight: 900;
+      color: var(--green); line-height: 1; margin-bottom: 6px;
+    }
+
+    .stat-tile.featured .num { color: var(--white); font-size: 3rem; }
+
+    .stat-tile .desc { font-size: 0.82rem; color: var(--ink-3); line-height: 1.5; }
+    .stat-tile.featured .desc { color: rgba(255,255,255,0.75); }
+
+    .impact-right h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 16px; }
+    .impact-right p { margin-bottom: 12px; }
+
+    .city-block { margin-top: 28px; display: flex; flex-direction: column; gap: 2px; }
+
+    .city-row {
+      display: flex; align-items: center;
+      background: var(--white); padding: 14px 18px; gap: 14px;
+      border-left: 4px solid var(--green);
+    }
+
+    .city-name { font-weight: 700; font-size: 0.9rem; color: var(--ink); }
+    .city-county { font-size: 0.78rem; color: var(--ink-3); margin-left: auto; }
+
+    @media (max-width: 820px) {
+      .impact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── HOW IT WORKS ────────────────────────────────────────────────────────── */
+    #how { background: var(--white); }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 48px; }
+
+    .step-tile {
+      background: var(--surface-2);
+      padding: 28px 24px;
+      border-top: 4px solid var(--stroke);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .step-tile:hover { border-top-color: var(--green); background: var(--white); }
+
+    .step-num {
+      font-family: var(--font-head); font-size: 2.4rem; font-weight: 900;
+      color: var(--green); line-height: 1; margin-bottom: 16px;
+      display: block;
+    }
+
+    .step-tile h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .step-tile p { font-size: 0.84rem; color: var(--ink-3); line-height: 1.65; }
+
+    @media (max-width: 700px) {
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 460px) {
+      .steps-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── STORY ───────────────────────────────────────────────────────────────── */
+    #story { background: var(--surface-2); }
+
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+
+    .story-left h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 16px; }
+    .story-left p { margin-bottom: 12px; }
+
+    .founder-tile {
+      background: var(--white);
+      padding: 24px;
+      margin-top: 28px;
+      border-left: 4px solid var(--green);
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+
+    .founder-monogram {
+      width: 52px; height: 52px;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .founder-monogram span {
+      font-family: var(--font-head); font-size: 1.2rem; font-weight: 900; color: var(--white);
+    }
+
+    .founder-name { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+    .founder-role { font-size: 0.78rem; color: var(--green); font-weight: 600; margin-bottom: 8px; }
+    .founder-bio { font-size: 0.84rem; color: var(--ink-2); line-height: 1.65; }
+
+    .timeline { display: flex; flex-direction: column; gap: 2px; }
+
+    .tl-item {
+      background: var(--white);
+      padding: 20px 24px;
+      border-left: 4px solid var(--stroke);
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .tl-item:hover { border-left-color: var(--green); }
+    .tl-item.active { border-left-color: var(--green); }
+
+    .tl-badge {
+      position: absolute; top: 20px; right: 20px;
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green);
+      background: #E0F7EF; padding: 3px 8px;
+    }
+
+    .tl-date {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 5px;
+    }
+
+    .tl-item h4 { font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .tl-item p { font-size: 0.82rem; color: var(--ink-3); line-height: 1.6; }
+
+    .board-banner {
+      background: var(--forest);
+      padding: 24px;
+      margin-top: 2px;
+    }
+
+    .board-banner h4 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .board-banner p { font-size: 0.84rem; color: rgba(255,255,255,0.6); margin-bottom: 16px; line-height: 1.55; }
+
+    @media (max-width: 820px) {
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── PARTNERS ────────────────────────────────────────────────────────────── */
+    #partners { background: var(--surface-inv); padding: 64px 24px; }
+
+    .partners-head { text-align: center; margin-bottom: 40px; }
+    .partners-head .eyebrow { color: #60D9A8; }
+    .partners-head p { color: rgba(255,255,255,0.5); max-width: 500px; margin: 0 auto; }
+
+    .partners-row {
+      display: flex; align-items: stretch; justify-content: center;
+      gap: 2px; flex-wrap: wrap;
+    }
+
+    .partner-tile {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      padding: 24px 28px;
+      min-width: 210px;
+      flex: 1; max-width: 300px;
+      transition: background 0.15s, border-color 0.15s;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .partner-tile:hover { background: rgba(0,187,119,0.08); border-color: rgba(0,187,119,0.3); }
+
+    .partner-tile-icon { margin-bottom: 4px; }
+
+    .partner-tile-name { font-size: 1rem; font-weight: 700; color: var(--white); }
+    .partner-tile-desc { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+    /* ── DONATE ──────────────────────────────────────────────────────────────── */
+    #donate { background: var(--green); padding: 80px 24px; }
+
+    .donate-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+
+    .donate-inner .eyebrow { color: rgba(255,255,255,0.65); letter-spacing: 0.18em; }
+
+    .donate-inner h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--white); margin-bottom: 14px;
+    }
+
+    .donate-inner > p {
+      color: rgba(255,255,255,0.75); font-size: 1rem; margin-bottom: 40px;
+    }
+
+    .donate-box {
+      background: var(--white);
+      padding: 40px 36px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .donate-clock-icon { margin: 0 auto 20px; display: block; }
+
+    .donate-box h3 {
+      font-size: 1.4rem; color: var(--ink); margin-bottom: 10px;
+    }
+
+    .donate-box p {
+      font-size: 0.92rem; color: var(--ink-2);
+      max-width: 440px; margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .donate-note {
+      font-size: 0.78rem; color: rgba(255,255,255,0.55);
+    }
+
+    /* ── CONTACT ─────────────────────────────────────────────────────────────── */
+    #contact { background: var(--white); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+
+    .contact-left h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 14px; }
+    .contact-left p { margin-bottom: 28px; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 2px; }
+
+    .contact-row {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: var(--surface-2); padding: 16px 18px;
+      border-left: 4px solid var(--green);
+    }
+
+    .contact-row-icon {
+      width: 36px; height: 36px;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-label { font-size: 0.72rem; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+    .contact-val { font-size: 0.88rem; color: var(--ink); font-weight: 500; }
+
+    .contact-form-wrap { background: var(--surface-2); padding: 32px; }
+
+    .contact-form-wrap h3 { font-family: var(--font-head); font-size: 1.3rem; color: var(--ink); margin-bottom: 24px; }
+
+    .form-row { margin-bottom: 16px; }
+
+    .form-row label {
+      display: block; font-size: 0.75rem; font-weight: 700;
+      color: var(--ink); text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .form-row input,
+    .form-row textarea,
+    .form-row select {
+      width: 100%; padding: 10px 14px;
+      border: 2px solid var(--stroke);
+      background: var(--white);
+      font-family: var(--font-ui); font-size: 0.9rem; color: var(--ink);
+      outline: none; appearance: none;
+      border-radius: 0;
+      transition: border-color 0.15s;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus,
+    .form-row select:focus { border-color: var(--green); }
+
+    .form-row textarea { resize: vertical; min-height: 110px; }
+
+    .form-btn {
+      width: 100%; background: var(--green); color: var(--white);
+      border: none; padding: 14px;
+      font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.15s;
+    }
+
+    .form-btn:hover { background: var(--forest); }
+
+    @media (max-width: 820px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────────────────── */
+    footer { background: var(--surface-inv); padding: 56px 24px 32px; }
+
+    .footer-grid {
+      max-width: 1096px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 28px;
+    }
+
+    .footer-logo-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+
+    .footer-mark {
+      width: 32px; height: 32px;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .footer-logo-text {
+      font-family: var(--font-head); font-size: 0.95rem; font-weight: 700;
+      color: var(--white); line-height: 1.1;
+    }
+
+    .footer-logo-text span { color: var(--green); display: block; }
+
+    .footer-brand p { font-size: 0.84rem; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+    .footer-tagline { font-size: 0.78rem; font-style: italic; color: var(--green); display: block; margin-top: 12px; }
+
+    .footer-col h5 {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--white); margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col ul a { font-size: 0.85rem; color: rgba(255,255,255,0.45); transition: color 0.15s; }
+    .footer-col ul a:hover { color: var(--green); }
+
+    .footer-bottom {
+      max-width: 1096px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.05);
+      padding: 5px 12px;
+      font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.45);
+    }
+
+    .pulse-dot {
+      width: 7px; height: 7px;
+      background: var(--amber);
+      flex-shrink: 0;
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @media (max-width: 700px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ── SCROLL REVEAL ────────────────────────────────────────────────────────── */
+    .fade {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade.in { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ───────────────────────────────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2L2 9H4V18H16V9H18L10 2Z" fill="white"/>
+        <rect x="7.5" y="12" width="5" height="6" rx="2.5" fill="#00BB77"/>
+        <circle cx="15" cy="5" r="3.5" fill="#F5A623"/>
+        <path d="M15 7.5C15 7.5 12.5 5.8 12.5 4.2C12.5 3.3 13.2 2.5 14.1 2.5C14.6 2.5 15 2.8 15 2.8C15 2.8 15.4 2.5 15.9 2.5C16.8 2.5 17.5 3.3 17.5 4.2C17.5 5.8 15 7.5 15 7.5Z" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">Next Door<span>Homeless</span></div>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#donate" class="nav-cta">Donate</a></li>
+  </ul>
+
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────────── -->
+<section id="home">
+  <div class="hero-layout">
+    <div class="hero-left">
+      <div class="hero-flag">
+        <div class="hero-flag-dot"></div>
+        Battle Creek &amp; Grand Rapids, Michigan
+      </div>
+      <h1 class="hero-title">Impact you can see <span class="accent">out your window.</span></h1>
+      <p class="hero-body">Next Door Homeless delivers cold water in the summer and warm knitwear in the winter, directly into the hands of unsheltered neighbors in downtown Battle Creek and downtown Grand Rapids. Every dollar you give becomes something real.</p>
+      <div class="hero-actions">
+        <a href="#donate" class="btn btn-filled">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          Donate Now
+        </a>
+        <a href="#mission" class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric">
+          <div class="metric-val">$5</div>
+          <div class="metric-label">= 10 bottles of cold water</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">$10</div>
+          <div class="metric-label">= 1 warm beanie or scarf</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">100%</div>
+          <div class="metric-label">of donations go to goods</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-label">Your Donation</div>
+        <h3>Directly buys goods for unsheltered neighbors</h3>
+        <p>No overhead. No waiting for a project to launch. Your $5 buys water today.</p>
+        <span class="chip"><span class="chip-dot"></span>Zero overhead on goods</span>
+        <span class="chip"><span class="chip-dot"></span>Visible local impact</span>
+      </div>
+      <div class="hero-card accent-amber">
+        <div class="hero-card-label" style="color:var(--amber)">Summer Program</div>
+        <h3>Cold water, April through October</h3>
+        <p>Staying hydrated in Michigan summer heat can be a matter of safety for people living outside.</p>
+      </div>
+      <div class="hero-card accent-dark">
+        <div class="hero-card-label">Winter Program</div>
+        <h3>Warm knitwear, November through March</h3>
+        <p>A beanie or scarf on a cold Michigan night is not a luxury. It is a lifeline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MISSION ────────────────────────────────────────────────────────────────── -->
+<section id="mission">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div class="mission-left fade">
+        <span class="eyebrow">Why We Exist</span>
+        <h2>Homelessness is happening next door.</h2>
+        <p>Walk through downtown Battle Creek or downtown Grand Rapids on any given day and within five minutes you will see dozens of our neighbors without a safe place to sleep. They are not statistics. They are people.</p>
+        <p>Big charities do important work, but it can be hard to see exactly where your money goes. At Next Door Homeless, your donation has one job: to buy something a person needs today.</p>
+        <div class="mission-pullquote">
+          <p>"Your $5 does not become part of a contribution to some project. It buys 10 bottles of water for the homeless in your neighborhood."</p>
+        </div>
+      </div>
+
+      <div class="values-list fade">
+        <div class="value-row">
+          <div class="value-num">01</div>
+          <div class="value-content">
+            <h4>Radical Transparency</h4>
+            <p>Every dollar is documented. Every purchase is itemized. You always know exactly what your generosity became.</p>
+          </div>
+        </div>
+        <div class="value-row">
+          <div class="value-num">02</div>
+          <div class="value-content">
+            <h4>Dignity in Delivery</h4>
+            <p>We go where people are. Volunteers walk the neighborhood and offer items directly, with warmth and respect.</p>
+          </div>
+        </div>
+        <div class="value-row">
+          <div class="value-num">03</div>
+          <div class="value-content">
+            <h4>Simplicity First</h4>
+            <p>We do fewer things better. Water and knitwear first, then we grow responsibly when the foundation is solid.</p>
+          </div>
+        </div>
+        <div class="value-row">
+          <div class="value-num">04</div>
+          <div class="value-content">
+            <h4>Community Rooted</h4>
+            <p>We are your neighbors helping our neighbors. Local giving that stays local, always.</p>
+          </div>
+        </div>
+        <div class="value-row">
+          <div class="value-num">05</div>
+          <div class="value-content">
+            <h4>Responsible Action</h4>
+            <p>Every program is guided by public health expertise. We only do what we can do safely and well.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROGRAMS ───────────────────────────────────────────────────────────────── -->
+<section id="programs">
+  <div class="wrap">
+    <div class="section-header fade">
+      <span class="eyebrow">What We Do</span>
+      <h2>Simple programs. Real results.</h2>
+      <p>We focus on what people outside actually need, season by season. No bureaucracy. No waiting lists. Just someone walking up and saying, "Here, this is for you."</p>
+    </div>
+
+    <div class="programs-grid">
+      <div class="prog-card fade">
+        <div class="prog-top water">
+          <div class="prog-season">April through October</div>
+          <h3>Bottled Water</h3>
+          <p>Staying hydrated in summer heat can be the difference between getting through the day and a medical emergency.</p>
+          <div class="prog-top-num">01</div>
+        </div>
+        <div class="prog-body">
+          <span class="phase-tag phase-now">Active Program</span>
+          <ul class="prog-items">
+            <li>Generic brand bottled water at lowest available unit cost</li>
+            <li>Mobile outreach through downtown neighborhoods</li>
+            <li>Temporary distribution points at rotating public parks</li>
+            <li>$1,000 raised = approximately 2,000 bottles distributed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="prog-card fade">
+        <div class="prog-top knitwear">
+          <div class="prog-season">November through March</div>
+          <h3>Knitwear</h3>
+          <p>A warm beanie or scarf on a cold Michigan night is not a luxury. It is a lifeline for someone sleeping outside.</p>
+          <div class="prog-top-num">02</div>
+        </div>
+        <div class="prog-body">
+          <span class="phase-tag phase-now">Active Program</span>
+          <ul class="prog-items">
+            <li>Beanies and scarves in universal sizes during Years 1 and 2</li>
+            <li>Socks and underwear in M, L, and XL added in Years 2 and 3</li>
+            <li>First distribution event planned before Christmas 2026</li>
+            <li>$1,000 raised = approximately 100 knitwear items distributed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="prog-card fade">
+        <div class="prog-top future">
+          <div class="prog-season">Year 3 and Beyond</div>
+          <h3>Growing Together</h3>
+          <p>As we build trust and funding over the first three years, we will carefully expand into more ways to help.</p>
+          <div class="prog-top-num">03</div>
+        </div>
+        <div class="prog-body">
+          <span class="phase-tag phase-future">Future Vision</span>
+          <ul class="prog-items">
+            <li>Prepared and packaged meal distribution</li>
+            <li>Naloxone (Narcan) distribution with public health oversight</li>
+            <li>Hygiene kit assembly and distribution</li>
+            <li>All expansions guided by our public health board member</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACT ─────────────────────────────────────────────────────────────────── -->
+<section id="impact">
+  <div class="wrap">
+    <div class="impact-grid">
+      <div class="impact-numbers fade">
+        <div class="stat-tile featured">
+          <div class="num">100%</div>
+          <div class="desc">of every donation goes directly toward goods for distribution. No portion is held for administrative overhead.</div>
+        </div>
+        <div class="stat-tile">
+          <div class="num">2,000</div>
+          <div class="desc">bottles of water per $1,000 raised</div>
+        </div>
+        <div class="stat-tile">
+          <div class="num">100</div>
+          <div class="desc">knitwear items per $1,000 raised</div>
+        </div>
+      </div>
+
+      <div class="impact-right fade">
+        <span class="eyebrow">Where We Serve</span>
+        <h2>Your neighbors. Your community.</h2>
+        <p>On any given day, walking through either of our service areas for just five minutes, you will encounter twenty or more unsheltered individuals. We are committed to being a visible, consistent presence for them.</p>
+        <p>Mobile outreach means we come to them. Every distribution event begins at a temporary park setup and fans out through the streets where people actually are.</p>
+        <div class="city-block">
+          <div class="city-row">
+            <span class="city-name">Downtown Battle Creek</span>
+            <span class="city-county">Calhoun County, MI</span>
+          </div>
+          <div class="city-row">
+            <span class="city-name">Downtown Grand Rapids</span>
+            <span class="city-county">Kent County, MI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────────────────────────── -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-header fade">
+      <span class="eyebrow">How It Works</span>
+      <h2>From your donation to their hands.</h2>
+      <p>We believe in keeping things simple and honest. Here is exactly what happens when you give to Next Door Homeless.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-tile fade">
+        <span class="step-num">01</span>
+        <h4>You Donate</h4>
+        <p>Your donation comes in through Zeffy, a free platform for nonprofits, meaning every cent reaches us with no fees taken.</p>
+      </div>
+      <div class="step-tile fade">
+        <span class="step-num">02</span>
+        <h4>We Buy Goods</h4>
+        <p>We purchase bottled water or knitwear at the lowest available unit cost, with every receipt saved and documented.</p>
+      </div>
+      <div class="step-tile fade">
+        <span class="step-num">03</span>
+        <h4>We Distribute</h4>
+        <p>Volunteers set up at a public park and walk through downtown, personally offering items to unsheltered neighbors.</p>
+      </div>
+      <div class="step-tile fade">
+        <span class="step-num">04</span>
+        <h4>You See It</h4>
+        <p>Real impact in the real community around you. Not a report. Not a project. Someone warm or hydrated, today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORY ──────────────────────────────────────────────────────────────────── -->
+<section id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-left fade">
+        <span class="eyebrow">Our Story</span>
+        <h2>Built by a neighbor, for our neighbors.</h2>
+        <p>Next Door Homeless was founded by Kimi Witherell, a Michigan accountant who looked around her community and decided that the distance between noticing a problem and doing something about it did not have to be very far.</p>
+        <p>Kimi brings professional financial expertise to the organization, meaning every dollar donated is accounted for with precision and published transparently. What began as a simple idea — give people water and warmth — is becoming a real organization with real reach.</p>
+        <p>We are currently in our founding phase, recruiting the board members needed to incorporate formally in Michigan. If you believe in this mission and have community experience to offer, we would love to hear from you.</p>
+
+        <div class="founder-tile">
+          <div class="founder-monogram"><span>KW</span></div>
+          <div>
+            <div class="founder-name">Kimi Witherell</div>
+            <div class="founder-role">Founder and Executive Director</div>
+            <p class="founder-bio">A Michigan accountant with a belief that homelessness is not an abstraction. It is happening next door, and that means it is possible to do something about it today.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade">
+        <span class="eyebrow">Where We Are</span>
+        <div class="timeline" style="margin-top:16px">
+          <div class="tl-item active">
+            <span class="tl-badge">In Progress</span>
+            <div class="tl-date">June through October 2026</div>
+            <h4>Building Our Founding Board</h4>
+            <p>Kimi is actively seeking two additional board members, including a public health professional. Once three are confirmed, incorporation can begin.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">August through November 2026</div>
+            <h4>Planning and Preparation</h4>
+            <p>The board will finalize operational plans, develop safety protocols, and prepare documentation for incorporation and tax exempt status.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">November 2026</div>
+            <h4>Formal Incorporation</h4>
+            <p>Next Door Homeless files as a Michigan nonprofit corporation and holds its first official board meeting. IRS 501(c)(3) application follows immediately.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Before December 25, 2026</div>
+            <h4>First Distribution Event</h4>
+            <p>Our first volunteer distribution of knitwear reaches unsheltered neighbors in Battle Creek and Grand Rapids before the holidays.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Spring 2027</div>
+            <h4>Full Operations Begin</h4>
+            <p>With 501(c)(3) status in progress and donations flowing through Zeffy, the water program launches for the April through October season.</p>
+          </div>
+        </div>
+
+        <div class="board-banner">
+          <h4>We are looking for board members</h4>
+          <p>Do you have experience in public health, community organizing, law, or fundraising? We are recruiting passionate individuals to help build this from the ground up.</p>
+          <a href="#contact" class="btn btn-ghost" style="font-size:0.82rem;padding:9px 20px">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARTNERS ───────────────────────────────────────────────────────────────── -->
+<section id="partners">
+  <div class="wrap">
+    <div class="partners-head fade">
+      <span class="eyebrow">Our Partners and Platforms</span>
+      <p>We are building relationships with organizations that share our values and help us reach further with every dollar.</p>
+    </div>
+    <div class="partners-row fade">
+      <div class="partner-tile">
+        <div class="partner-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00BB77" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </div>
+        <div class="partner-tile-name">Zeffy</div>
+        <div class="partner-tile-desc">Zero fee fundraising platform. Every cent of every donation reaches us directly.</div>
+      </div>
+      <div class="partner-tile">
+        <div class="partner-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00BB77" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="partner-tile-name">Greater Good Charities</div>
+        <div class="partner-tile-desc">Expanding our reach to a broader community of givers who care about local impact.</div>
+      </div>
+      <div class="partner-tile">
+        <div class="partner-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="partner-tile-name">County Public Health</div>
+        <div class="partner-tile-desc">Seeking a public health professional to guide our programs safely and credibly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DONATE ─────────────────────────────────────────────────────────────────── -->
+<section id="donate">
+  <div class="donate-inner fade">
+    <span class="eyebrow">Support Our Work</span>
+    <h2>Be the reason someone stays warm tonight.</h2>
+    <p>Every single donation goes straight to bottled water and knitwear for your neighbors. No fees, no overhead, no uncertainty about where your money went.</p>
+
+    <div class="donate-box">
+      <svg class="donate-clock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      <h3>Online donations are almost ready!</h3>
+      <p>We are in the process of incorporating Next Door Homeless as a Michigan nonprofit, and our online donation portal through Zeffy will be live very soon. Please check back shortly! In the meantime, we would love to hear from you through the contact form below.</p>
+    </div>
+
+    <p class="donate-note">Once incorporated, Next Door Homeless will apply for 501(c)(3) status, making your donations fully tax deductible.</p>
+  </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-left fade">
+        <span class="eyebrow">Get In Touch</span>
+        <h2>We would love to hear from you.</h2>
+        <p>Whether you want to volunteer, join the board, make a donation pledge, or simply learn more about what we are doing, reach out. Every message is read personally by Kimi.</p>
+
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Service Area</div>
+              <div class="contact-val">Downtown Battle Creek and Downtown Grand Rapids, Michigan</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Founder</div>
+              <div class="contact-val">Kimi Witherell, Founder and Executive Director</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Status</div>
+              <div class="contact-val">Pre-incorporation. Founding board recruitment underway.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap fade">
+        <h3>Send us a message</h3>
+        <div class="form-row">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Jane Smith" />
+        </div>
+        <div class="form-row">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="jane@example.com" />
+        </div>
+        <div class="form-row">
+          <label for="reason">I am reaching out because...</label>
+          <select id="reason">
+            <option value="">Select a reason</option>
+            <option value="volunteer">I want to volunteer</option>
+            <option value="board">I am interested in joining the board</option>
+            <option value="donate">I would like to make a donation pledge</option>
+            <option value="partner">I represent an organization interested in partnering</option>
+            <option value="press">Press or media inquiry</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us a little about yourself and how you would like to help..."></textarea>
+        </div>
+        <button class="form-btn" onclick="handleSubmit(event)">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <div class="footer-mark">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2L2 9H4V18H16V9H18L10 2Z" fill="white"/>
+            <rect x="7.5" y="12" width="5" height="6" rx="2.5" fill="#00BB77"/>
+            <circle cx="15" cy="5" r="3.5" fill="#F5A623"/>
+          </svg>
+        </div>
+        <div class="footer-logo-text">Next Door<span>Homeless</span></div>
+      </div>
+      <p>A Michigan nonprofit in formation, dedicated to delivering immediate, visible relief to unsheltered neighbors in downtown Battle Creek and downtown Grand Rapids.</p>
+      <span class="footer-tagline">Impact you can see out your window.</span>
+    </div>
+
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#mission">Our Mission</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#donate">Donate</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Get Involved</h5>
+      <ul>
+        <li><a href="#contact">Volunteer</a></li>
+        <li><a href="#contact">Join the Board</a></li>
+        <li><a href="#contact">Make a Pledge</a></li>
+        <li><a href="#contact">Partner With Us</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>2026 Next Door Homeless. Nonprofit incorporation in progress, State of Michigan.</p>
+    <div class="status-pill">
+      <div class="pulse-dot"></div>
+      Pre-incorporation. Board recruitment in progress.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow =
+      window.scrollY > 10 ? '0 2px 12px rgba(0,0,0,0.1)' : 'none';
+  });
+
+  // Mobile nav
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+  );
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg = document.getElementById('message').value.trim();
+    if (!name || !email || !msg) {
+      alert('Please fill in your name, email, and message before sending.');
+      return;
+    }
+    const btn = e.target;
+    btn.textContent = 'MESSAGE SENT — THANK YOU!';
+    btn.style.background = 'var(--forest)';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+      btn.disabled = false;
+      ['name','email','reason','message'].forEach(id => document.getElementById(id).value = '');
+    }, 4000);
+  }
+</script>
+</body>
+</html>
